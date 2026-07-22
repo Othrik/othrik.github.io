@@ -352,7 +352,7 @@ a:hover {
   background: var(--surface-warm);
 }
 
-/* Avatar placeholder */
+/* Avatar */
 .avatar {
   width: 120px;
   height: 120px;
@@ -367,6 +367,10 @@ a:hover {
   color: #ffffff;
   letter-spacing: -0.02em;
   flex-shrink: 0;
+}
+.avatar-img {
+  object-fit: cover;
+  display: block;
 }
 .avatar-row {
   display: flex;
@@ -816,7 +820,7 @@ a:hover {
     <div class="hero-grid">
       <div class="stack-8">
         <div class="avatar-row">
-          <div class="avatar" aria-hidden="true">ZH</div>
+          <img class="avatar avatar-img" src="assets/avatar.png" alt="Ziheng Hu" />
           <div class="stack-2">
             <p class="eyebrow">Pharmaceutical Sciences</p>
             <p class="body-sm body-meta">XJTLU · Suzhou, China</p>
