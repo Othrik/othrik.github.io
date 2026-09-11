@@ -698,6 +698,31 @@ a:hover {
   color: var(--meta);
   white-space: nowrap;
 }
+.honour-link {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s ease;
+}
+.honour-link:hover { border-bottom-color: currentColor; }
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.86);
+  padding: clamp(16px, 4vw, 48px);
+  cursor: zoom-out;
+}
+.lightbox.is-open { display: flex; }
+.lightbox img {
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 8px;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.5);
+}
 
 /* ═══ Contact ═══ */
 .contact-grid {
@@ -1303,14 +1328,14 @@ a:hover {
       <div class="honour-item reveal">
         <div>
           <p class="honour-title">Dean's List, Academic Year 2025–2026</p>
-          <p class="honour-detail">Wisdom Lake Academy of Pharmacy, Xi'an Jiaotong-Liverpool University · Top 10% by academic performance</p>
+          <p class="honour-detail">Wisdom Lake Academy of Pharmacy, Xi'an Jiaotong-Liverpool University · Top 10% by academic performance · <a href="assets/deans-list-ay2025-26.jpg" class="honour-link" data-lightbox data-alt="Wisdom Lake Academy of Pharmacy Dean's List, Academic Year 2025–2026">View official list</a></p>
         </div>
         <span class="honour-year">2026</span>
       </div>
       <div class="honour-item reveal">
         <div>
           <p class="honour-title">Dean's List, Academic Year 2024–2025</p>
-          <p class="honour-detail">Wisdom Lake Academy of Pharmacy, Xi'an Jiaotong-Liverpool University · Top 10% by academic performance</p>
+          <p class="honour-detail">Wisdom Lake Academy of Pharmacy, Xi'an Jiaotong-Liverpool University · Top 10% by academic performance · <a href="assets/deans-list-ay2024-25.jpg" class="honour-link" data-lightbox data-alt="Wisdom Lake Academy of Pharmacy Dean's List, Academic Year 2024–2025">View official list</a></p>
         </div>
         <span class="honour-year">2025</span>
       </div>
@@ -1382,6 +1407,10 @@ a:hover {
 <!-- ═══════════════════════════════════════════════════════════════
      Scroll reveal script
      ═══════════════════════════════════════════════════════════════ -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Dean's List official document">
+  <img id="lightbox-img" alt="">
+</div>
+
 <script>
 (function() {
   var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -1406,6 +1435,34 @@ a:hover {
   });
 
   reveals.forEach(function(el) { observer.observe(el); });
+})();
+
+/* ── Dean's List lightbox ── */
+(function() {
+  var lb = document.getElementById('lightbox');
+  var img = document.getElementById('lightbox-img');
+  if (!lb || !img) return;
+
+  function open(link) {
+    img.src = link.getAttribute('href');
+    img.alt = link.getAttribute('data-alt') || 'Dean\'s List official document';
+    lb.classList.add('is-open');
+  }
+  function close() {
+    lb.classList.remove('is-open');
+    img.src = '';
+  }
+
+  document.querySelectorAll('[data-lightbox]').forEach(function(link) {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      open(link);
+    });
+  });
+  lb.addEventListener('click', close);
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') close();
+  });
 })();
 </script>
 
